@@ -1,42 +1,141 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+
+h1 {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.task-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.task-form input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.task-form button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item button {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.no-tasks {
+  text-align: center;
+}
+
+/* Light mode styles */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ffffff;
+    color: #000000;
   }
-  to {
-    transform: rotate(360deg);
+
+  .task-form input {
+    border: 1px solid #ccc;
+  }
+
+  .task-form button {
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  .task-form button:hover {
+    background-color: #4cae4c;
+  }
+
+  .task-item {
+    background: #f9f9f9;
+    color: #000000;
+  }
+
+  .task-item button {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .task-item button:hover {
+    background-color: #c9302c;
+  }
+
+  .no-tasks {
+    color: #777;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #ffffff;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .task-form input {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444;
+  }
 
-.read-the-docs {
-  color: #888;
+  .task-form button {
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  .task-form button:hover {
+    background-color: #4cae4c;
+  }
+
+  .task-item {
+    background: #1e1e1e;
+    color: #ffffff;
+  }
+
+  .task-item button {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .task-item button:hover {
+    background-color: #c9302c;
+  }
+
+  .no-tasks {
+    color: #aaaaaa;
+  }
 }
