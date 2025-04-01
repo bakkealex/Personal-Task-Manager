@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
+import Modal from "./components/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -10,35 +11,42 @@ function App() {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
+  // Set Edit Task state
+  const [editingTask, setEditingTask] = useState(null);
+
+  // Update localStorage whenever tasks change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   const addTask = (taskDescription) => {
     const newTask = {
       id: Date.now(),
       description: taskDescription,
       isCompleted: false,
     };
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Save to localStorage
+    setTasks([...tasks, newTask]);
   };
 
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Save to localStorage
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   const toggleTaskCompletion = (taskId) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+      )
     );
-    setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Save to localStorage
   };
 
-  useEffect(() => {
-    // Sync tasks to localStorage whenever tasks change
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  const saveTask = (taskId, newDescription) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, description: newDescription } : task
+      )
+    );
+  };
 
   return (
     <div className="container mt-4">
@@ -56,9 +64,16 @@ function App() {
             tasks={tasks}
             onDeleteTask={deleteTask}
             onToggleTask={toggleTaskCompletion}
+            onEditTask={setEditingTask}
           />
         </div>
       </div>
+      <Modal
+        show={!!editingTask}
+        onClose={() => setEditingTask(null)}
+        task={editingTask}
+        onSave={saveTask}
+      />
     </div>
   );
 }

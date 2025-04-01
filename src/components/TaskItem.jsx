@@ -1,6 +1,6 @@
 import React from "react";
 
-const TaskItem = ({ task, onDelete, onToggle }) => {
+const TaskItem = ({ task, onDelete, onToggle, onEdit }) => {
   return (
     <div
       className={`task-item mb-2 ${task.isCompleted ? "text-muted" : ""}`}
@@ -11,10 +11,16 @@ const TaskItem = ({ task, onDelete, onToggle }) => {
         <button
           className={`btn btn-${
             task.isCompleted ? "secondary" : "success"
-          } btn-sm me-2`}
+          } btn-sm me-1`}
           onClick={() => onToggle(task.id)}
         >
           {task.isCompleted ? "Undo" : "Done"}
+        </button>
+        <button
+          className="btn btn-warning btn-sm me-1"
+          onClick={() => onEdit(task)}
+        >
+          Edit
         </button>
         <button
           className="btn btn-danger btn-sm"
