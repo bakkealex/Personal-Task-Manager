@@ -1,6 +1,6 @@
 import React from "react";
 
-const TaskItem = ({ task, onDelete, onToggle, onEdit }) => {
+const TaskItem = React.memo(({ task, onDelete, onToggle, onEdit }) => {
   return (
     <div
       className={`task-item mb-2 ${task.isCompleted ? "text-muted" : ""}`}
@@ -31,6 +31,6 @@ const TaskItem = ({ task, onDelete, onToggle, onEdit }) => {
       </div>
     </div>
   );
-};
+});
 
 export default TaskItem;

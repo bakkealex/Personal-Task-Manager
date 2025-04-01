@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import Modal from "./components/Modal";
@@ -19,34 +19,38 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (taskDescription) => {
+  // Memoize the addTask function to avoid unnecessary re-renders
+  const addTask = useCallback((taskDescription) => {
     const newTask = {
       id: Date.now(),
       description: taskDescription,
       isCompleted: false,
     };
-    setTasks([...tasks, newTask]);
-  };
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }, []);
 
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
-  };
+  // Memoize the deleteTask function
+  const deleteTask = useCallback((taskId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  }, []);
 
-  const toggleTaskCompletion = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
+  // Memoize the toggleTaskCompletion function
+  const toggleTaskCompletion = useCallback((taskId) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
         task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
       )
     );
-  };
+  }, []);
 
-  const saveTask = (taskId, newDescription) => {
-    setTasks(
-      tasks.map((task) =>
+  // Memoize the saveTask function
+  const saveTask = useCallback((taskId, newDescription) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
         task.id === taskId ? { ...task, description: newDescription } : task
       )
     );
-  };
+  }, []);
 
   return (
     <div className="container mt-4">
